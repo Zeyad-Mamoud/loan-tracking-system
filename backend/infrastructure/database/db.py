@@ -122,11 +122,17 @@ class SQLAlchemyContactRepository(ContactRepository):
         }
 
     def add(self, contact: Contact) -> Contact:
-        db_contact = ContactModel(**contact.to_dict()) 
+        # Convert Contact entity to dict for database model
+        contact_dict = {
+            "name": contact.name,
+            "email": contact.email,
+            "phone": contact.phone
+        }
+        db_contact = ContactModel(**contact_dict)
         self.session.add(db_contact)
         self.session.commit()
         self.session.refresh(db_contact)
-        return Contact(**self.to_dict(db_contact)) 
+        return Contact(**self.to_dict(db_contact))
 
     def get_by_id(self, contact_id: int) -> Contact:
         db_contact = self.session.query(ContactModel).filter(ContactModel.id == contact_id).first()
@@ -134,13 +140,13 @@ class SQLAlchemyContactRepository(ContactRepository):
 
     def get_all(self) -> List[Contact]:
         db_contacts = self.session.query(ContactModel).all()
-        return [Contact(**self.to_dict(contact)) for contact in db_contacts]  # تحويل كل Contact إلى dict
+        return [Contact(**self.to_dict(contact)) for contact in db_contacts]
 
     def get_contact_by_id(self, contact_id: int) -> Contact:
         db_contact = self.session.query(ContactModel).filter(ContactModel.id == contact_id).first()
         if not db_contact:
             return None
-        return Contact(**self.to_dict(db_contact))  
+        return Contact(**self.to_dict(db_contact))
 
 def get_db():
     db = SessionLocal()
