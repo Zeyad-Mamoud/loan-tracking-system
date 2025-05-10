@@ -1,0 +1,64 @@
+.upcoming-loans {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.upcoming-loans h3 {
+    color: #856404;
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+}
+
+.upcoming-loans-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.upcoming-loan-item {
+    background-color: white;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.loan-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.contact-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.amount {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.due-date {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.remaining {
+    color: #6c757d;
+}
+
+.upcoming-loans.loading {
+    text-align: center;
+    color: #666;
+}
+
+.upcoming-loans.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}

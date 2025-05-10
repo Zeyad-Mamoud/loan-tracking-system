@@ -1,0 +1,36 @@
+.contact-form {
+    background-color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-form form {
+    display: grid;
+    gap: var(--spacing-md);
+    max-width: 500px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.contact-form button {
+    margin-top: var(--spacing-md);
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: 1rem;
+    background-color: var(--success-color);
+}
+
+.contact-form button:hover {
+    background-color: #16a34a;
+}

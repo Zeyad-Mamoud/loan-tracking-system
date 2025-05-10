@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 11020044
+      POSTGRES_DB: loan_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - loan-tracking-network
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:11020044@db:5432/loan_db
+    depends_on:
+      - db
+    networks:
+      - loan-tracking-network
+
+networks:
+  loan-tracking-network:
+    driver: bridge
+
+volumes:
+  db_data:

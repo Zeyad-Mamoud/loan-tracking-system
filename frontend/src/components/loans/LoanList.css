@@ -1,0 +1,105 @@
+.loan-list {
+    background-color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.loans-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-md);
+    background-color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.loans-table th,
+.loans-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.loans-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.loans-table tr:hover {
+    background-color: #f8fafc;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-partial {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-paid {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.action-button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.mark-paid {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.mark-paid:hover {
+    background-color: #059669;
+}
+
+.mark-partial {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.mark-partial:hover {
+    background-color: #4b5563;
+}
+
+.no-loans {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .loans-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}

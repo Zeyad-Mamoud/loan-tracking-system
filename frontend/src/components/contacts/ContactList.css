@@ -1,0 +1,38 @@
+.contact-list {
+    background-color: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.contacts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-md);
+    background-color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.contacts-table th,
+.contacts-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contacts-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.contacts-table tr:hover {
+    background-color: #f8fafc;
+}
+
+.no-contacts {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--secondary-color);
+    font-style: italic;
+}
