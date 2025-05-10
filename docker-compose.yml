@@ -5,8 +5,8 @@ services:
     image: postgres:13
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1102004
-      POSTGRES_DB: loan_db
+      POSTGRES_PASSWORD: CJvkaczJkwYTOcYKfHpbPFNHVfHqJkiF
+      POSTGRES_DB: railway
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
