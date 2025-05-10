@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine as build
+FROM node:18-alpine as builder
 
 WORKDIR /app
 
@@ -13,13 +13,14 @@ RUN npm install
 COPY . .
 
 # Build the app
+ENV NODE_ENV=production
 RUN npm run build
 
 # Production stage
 FROM nginx:stable-alpine
 
 # Copy built assets from build stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
