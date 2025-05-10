@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://renewed-communication-production.up.railway.app';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://20.87.61.183:8000';
 
 const headers = {
     'Content-Type': 'application/json',

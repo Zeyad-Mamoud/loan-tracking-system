@@ -18,7 +18,7 @@ CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=CORS_ORIGINS,
+    allow_origins=["http://102.133.196.67", "http://loan-tracking-frontend.southafricanorth.azurecontainer.io"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

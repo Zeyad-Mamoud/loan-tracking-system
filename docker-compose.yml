@@ -4,8 +4,8 @@ services:
   db:
     image: postgres:13
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1102004
+      POSTGRES_USER: cloudteam
+      POSTGRES_PASSWORD: Zikazika1@
       POSTGRES_DB: loan_db
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -29,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:11020044@db:5432/loan_db
+      - DATABASE_URL=postgresql://cloudteam:Zikazika1@@loantrackingpgsql.postgres.database.azure.com:5432/loan_db"
     depends_on:
       - db
     networks:
