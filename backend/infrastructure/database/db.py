@@ -37,7 +37,7 @@ class SQLAlchemyLoanRepository(LoanRepository):
             'remaining_balance': db_loan.remaining_balance
         }
 
-    def get_upcoming_loans(self, days: int = 7) -> List[dict]:
+    def get_upcoming_loans(self, days: int = 7) -> List[Loan]:
         today = date.today()
         end_date = today + timedelta(days=days)
         
@@ -47,7 +47,7 @@ class SQLAlchemyLoanRepository(LoanRepository):
             LoanModel.status != LoanStatus.PAID.value
         ).all()
         
-        return [self.to_dict(loan) for loan in db_loans]
+        return [Loan(**self.to_dict(loan)) for loan in db_loans]
 
     def add(self, loan: Loan) -> Loan:
         # Convert Loan entity to dict for database model
