@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'loan-tracking-system-production.up.railway.app';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'renewed-communication-production.up.railway.app';
 
 const headers = {
     'Content-Type': 'application/json',
