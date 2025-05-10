@@ -111,22 +111,19 @@ class SQLAlchemyContactRepository(ContactRepository):
         return self._session
 
     def add(self, contact: Contact) -> Contact:
-        with self.session as session:
-            db_contact = ContactModel(**contact.__dict__)
-            session.add(db_contact)
-            session.commit()
-            session.refresh(db_contact)
-            return Contact(**db_contact.__dict__)
+        db_contact = ContactModel(**contact.__dict__)
+        self.session.add(db_contact)
+        self.session.commit()
+        self.session.refresh(db_contact)
+        return Contact(**db_contact.__dict__)
 
     def get_by_id(self, contact_id: int) -> Contact:
-        with self.session as session:
-            db_contact = session.query(ContactModel).filter(ContactModel.id == contact_id).first()
-            return Contact(**db_contact.__dict__) if db_contact else None
+        db_contact = self.session.query(ContactModel).filter(ContactModel.id == contact_id).first()
+        return Contact(**db_contact.__dict__) if db_contact else None
 
     def get_all(self) -> List[Contact]:
-        with self.session as session:
-            db_contacts = session.query(ContactModel).all()
-            return [Contact(**contact.__dict__) for contact in db_contacts]
+        db_contacts = self.session.query(ContactModel).all()
+        return [Contact(**contact.__dict__) for contact in db_contacts]
 
 def get_db():
     db = SessionLocal()
