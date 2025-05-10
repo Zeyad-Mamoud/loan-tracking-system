@@ -10,8 +10,8 @@ import os
 from fastapi import Depends
 from datetime import date, timedelta
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:CJvkaczJkwYTOcYKfHpbPFNHVfHqJkiF@yamabiko.proxy.rlwy.net:40438/railway")
-engine = create_engine(DATABASE_URL)
+DATABASE_PUBLIC_URL = os.getenv("DATABASE_PUBLIC_URL", "postgresql://postgres:CJvkaczJkwYTOcYKfHpbPFNHVfHqJkiF@yamabiko.proxy.rlwy.net:40438/railway")
+engine = create_engine(DATABASE_PUBLIC_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class SQLAlchemyLoanRepository(LoanRepository):
