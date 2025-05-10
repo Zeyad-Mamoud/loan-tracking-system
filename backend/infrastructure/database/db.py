@@ -47,7 +47,15 @@ class SQLAlchemyLoanRepository(LoanRepository):
             LoanModel.status != LoanStatus.PAID.value
         ).all()
         
-        return [Loan(**self.to_dict(loan)) for loan in db_loans]
+        return [Loan(
+            id=loan.id,
+            amount=loan.amount,
+            due_date=loan.due_date,
+            loan_type=LoanType(loan.loan_type),
+            contact_id=loan.contact_id,
+            status=LoanStatus(loan.status),
+            remaining_balance=loan.remaining_balance
+        ) for loan in db_loans]
 
     def add(self, loan: Loan) -> Loan:
         # Convert Loan entity to dict for database model

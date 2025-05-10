@@ -115,10 +115,9 @@ def get_upcoming_loans(days: int = 7, repo=Depends(get_loan_repository), db: Ses
                     "id": loan.id,
                     "amount": loan.amount,
                     "due_date": loan.due_date.isoformat(),
-                    "loan_type": loan.loan_type.value,
+                    "loan_type": loan.loan_type,
                     "contact_name": contact.name,
                     "remaining_balance": loan.remaining_balance
-                    
                 })
         
         return response
