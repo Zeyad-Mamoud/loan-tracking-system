@@ -10,9 +10,17 @@ import os
 from fastapi import Depends
 from datetime import date, timedelta
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:11020044@db:5432/loan_db")
+# Get DATABASE_URL from environment variable
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Create tables if they don't exist
+from infrastructure.database.models import Base
+Base.metadata.create_all(bind=engine)
 
 class SQLAlchemyLoanRepository(LoanRepository):
     def __init__(self, session: Session = None):
