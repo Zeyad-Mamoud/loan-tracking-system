@@ -7,17 +7,17 @@ from sqlalchemy.orm import Session
 from fastapi import Depends
 import logging
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 app = FastAPI(title="Loan Tracking System")
+
+# Get CORS origins from environment variable
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
 
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://0710-197-46-210-143.ngrok-free.app",
-        "https://80db-197-46-210-143.ngrok-free.app",
-        "http://localhost:3000"
-    ],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
