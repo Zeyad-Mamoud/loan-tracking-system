@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://80db-197-46-210-143.ngrok-free.app';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'loan-tracking-system-production.up.railway.app';
 
 const headers = {
     'Content-Type': 'application/json',
