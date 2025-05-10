@@ -38,13 +38,13 @@ class SQLAlchemyLoanRepository(LoanRepository):
             loan_dict = {
                 'id': db_loan.id,
                 'amount': db_loan.amount,
-                'due_date': db_loan.due_date.isoformat(),  # عشان التاريخ يكون JSON-compatible
+                'due_date': db_loan.due_date.isoformat(),  
                 'loan_type': db_loan.loan_type,
                 'contact_id': db_loan.contact_id,
                 'status': db_loan.status,
                 'remaining_balance': db_loan.remaining_balance
             }
-            loans.append(loan_dict)
+            return Loan(**loan_dict)
         
         return loans
 
