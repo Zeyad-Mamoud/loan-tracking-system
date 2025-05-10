@@ -38,7 +38,7 @@ class SQLAlchemyLoanRepository(LoanRepository):
             loan_dict = {
                 'id': db_loan.id,
                 'amount': db_loan.amount,
-                'due_date': db_loan.due_date.,
+                'due_date': db_loan.due_date,
                 'loan_type': db_loan.loan_type,
                 'contact_id': db_loan.contact_id,
                 'status': db_loan.status,
