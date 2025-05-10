@@ -10,7 +10,7 @@ import os
 from fastapi import Depends
 from datetime import date, timedelta
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:11020044@db:5432/loan_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:UfsEJYpRbxhXNZNkNaEwEBXvHcAfqHCX@postgres.railway.internal:5432/railway")
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
