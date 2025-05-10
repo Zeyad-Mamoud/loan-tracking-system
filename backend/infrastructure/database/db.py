@@ -10,7 +10,7 @@ import os
 from fastapi import Depends
 from datetime import date, timedelta
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:11020044@renewed-communication:5432/loan_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:11020044@db:5432/loan_db")
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -101,6 +101,7 @@ class SQLAlchemyLoanRepository(LoanRepository):
         return Contact(**db_contact.__dict__) if db_contact else None
 
 class SQLAlchemyContactRepository(ContactRepository):
+    
     def __init__(self, session: Session = None):
         self._session = session
 
@@ -110,23 +111,37 @@ class SQLAlchemyContactRepository(ContactRepository):
             raise ValueError("Session is not provided. Use dependency injection.")
         return self._session
 
+    def to_dict(self, db_contact: ContactModel) -> dict:
+        """
+        Convert a ContactModel object to a dictionary.
+        """
+        return {
+            "id": db_contact.id,
+            "name": db_contact.name,
+            "email": db_contact.email,
+            "phone": db_contact.phone,
+        }
+
     def add(self, contact: Contact) -> Contact:
-        with self.session as session:
-            db_contact = ContactModel(**contact.__dict__)
-            session.add(db_contact)
-            session.commit()
-            session.refresh(db_contact)
-            return Contact(**db_contact.__dict__)
+        db_contact = ContactModel(**contact.to_dict())  # تحويل Contact إلى dict
+        self.session.add(db_contact)
+        self.session.commit()
+        self.session.refresh(db_contact)
+        return Contact(**self.to_dict(db_contact))  # تحويل db_contact إلى dict
 
     def get_by_id(self, contact_id: int) -> Contact:
-        with self.session as session:
-            db_contact = session.query(ContactModel).filter(ContactModel.id == contact_id).first()
-            return Contact(**db_contact.__dict__) if db_contact else None
+        db_contact = self.session.query(ContactModel).filter(ContactModel.id == contact_id).first()
+        return Contact(**self.to_dict(db_contact)) if db_contact else None
 
     def get_all(self) -> List[Contact]:
-        with self.session as session:
-            db_contacts = session.query(ContactModel).all()
-            return [Contact(**contact.__dict__) for contact in db_contacts]
+        db_contacts = self.session.query(ContactModel).all()
+        return [Contact(**self.to_dict(contact)) for contact in db_contacts]  # تحويل كل Contact إلى dict
+
+    def get_contact_by_id(self, contact_id: int) -> Contact:
+        db_contact = self.session.query(ContactModel).filter(ContactModel.id == contact_id).first()
+        if not db_contact:
+            return None
+        return Contact(**self.to_dict(db_contact))  # تحويل db_contact إلى dict
 
 def get_db():
     db = SessionLocal()
