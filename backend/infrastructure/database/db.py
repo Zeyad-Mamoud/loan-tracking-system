@@ -22,6 +22,21 @@ class SQLAlchemyLoanRepository(LoanRepository):
         if self._session is None:
             raise ValueError("Session is not provided. Use dependency injection.")
         return self._session
+
+    def to_dict(self, db_loan: LoanModel) -> dict:
+        """
+        Convert a LoanModel object to a dictionary.
+        """
+        return {
+            'id': db_loan.id,
+            'amount': db_loan.amount,
+            'due_date': db_loan.due_date,
+            'loan_type': db_loan.loan_type,
+            'contact_id': db_loan.contact_id,
+            'status': db_loan.status,
+            'remaining_balance': db_loan.remaining_balance
+        }
+
     def get_upcoming_loans(self, days: int = 7) -> List[dict]:
         today = date.today()
         end_date = today + timedelta(days=days)
@@ -32,72 +47,58 @@ class SQLAlchemyLoanRepository(LoanRepository):
             LoanModel.status != LoanStatus.PAID.value
         ).all()
         
-        loans = []
-        for db_loan in db_loans:
-            loan_dict = {
-                'id': db_loan.id,
-                'amount': db_loan.amount,
-                'due_date': db_loan.due_date,
-                'loan_type': db_loan.loan_type,
-                'contact_id': db_loan.contact_id,
-                'status': db_loan.status,
-                'remaining_balance': db_loan.remaining_balance
-            }
-            loans.append(Loan(**loan_dict))
-        return loans
-
+        return [self.to_dict(loan) for loan in db_loans]
 
     def add(self, loan: Loan) -> Loan:
-        db_loan = LoanModel(**loan.__dict__)
+        # Convert Loan entity to dict for database model
+        loan_dict = {
+            'amount': loan.amount,
+            'due_date': loan.due_date,
+            'loan_type': loan.loan_type,
+            'contact_id': loan.contact_id,
+            'status': loan.status,
+            'remaining_balance': loan.remaining_balance
+        }
+        db_loan = LoanModel(**loan_dict)
         self.session.add(db_loan)
         self.session.commit()
         self.session.refresh(db_loan)
-        return Loan(**db_loan.__dict__)
+        return Loan(**self.to_dict(db_loan))
 
     def get_by_id(self, loan_id: int) -> Loan:
         db_loan = self.session.query(LoanModel).filter(LoanModel.id == loan_id).first()
         if not db_loan:
             return None
-            
-        loan_dict = {
-            'id': db_loan.id,
-            'amount': db_loan.amount,
-            'due_date': db_loan.due_date,
-            'loan_type': db_loan.loan_type,
-            'contact_id': db_loan.contact_id,
-            'status': db_loan.status,
-            'remaining_balance': db_loan.remaining_balance
-        }
-        return Loan(**loan_dict)
+        return Loan(**self.to_dict(db_loan))
 
     def get_all(self) -> List[Loan]:
         db_loans = self.session.query(LoanModel).all()
-        loans = []
-        for db_loan in db_loans:
-            loan_dict = {
-                'id': db_loan.id,
-                'amount': db_loan.amount,
-                'due_date': db_loan.due_date,
-                'loan_type': db_loan.loan_type,
-                'contact_id': db_loan.contact_id,
-                'status': db_loan.status,
-                'remaining_balance': db_loan.remaining_balance
-            }
-            loans.append(Loan(**loan_dict))
-        return loans
+        return [Loan(**self.to_dict(loan)) for loan in db_loans]
 
     def update(self, loan: Loan) -> Loan:
         db_loan = self.session.query(LoanModel).filter(LoanModel.id == loan.id).first()
+        if not db_loan:
+            return None
+            
+        # Update only the fields that are not None
         for key, value in loan.__dict__.items():
             if key != "id" and value is not None:
                 setattr(db_loan, key, value)
+                
         self.session.commit()
         self.session.refresh(db_loan)
-        return Loan(**db_loan.__dict__)
+        return Loan(**self.to_dict(db_loan))
 
     def get_contact_by_id(self, contact_id: int) -> Contact:
         db_contact = self.session.query(ContactModel).filter(ContactModel.id == contact_id).first()
-        return Contact(**db_contact.__dict__) if db_contact else None
+        if not db_contact:
+            return None
+        return Contact(
+            id=db_contact.id,
+            name=db_contact.name,
+            email=db_contact.email,
+            phone=db_contact.phone
+        )
 
 class SQLAlchemyContactRepository(ContactRepository):
     
