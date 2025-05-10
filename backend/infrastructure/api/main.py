@@ -12,7 +12,7 @@ import os
 app = FastAPI(title="Loan Tracking System")
 
 # Get CORS origins from environment variable
-CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "https://loan-tracking-system-production-a1aa.up.railway.app").split(",")
 
 # Configure CORS
 app.add_middleware(
