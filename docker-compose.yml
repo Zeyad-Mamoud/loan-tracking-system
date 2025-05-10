@@ -29,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://cloudteam:Zikazika1@@loantrackingpgsql.postgres.database.azure.com:5432/loan_db"
+        - DATABASE_URL=postgresql://cloudteam:Zikazika1%40@loantrackingpgsql.postgres.database.azure.com:5432/loan_db
     depends_on:
       - db
     networks:
