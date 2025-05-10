@@ -29,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_PUBLIC_UR=postgresql://postgres:CJvkaczJkwYTOcYKfHpbPFNHVfHqJkiF@postgres.railway.internal:5432/railway
+      - DATABASE_URL=postgresql://postgres:11020044@db:5432/loan_db
     depends_on:
       - db
     networks:

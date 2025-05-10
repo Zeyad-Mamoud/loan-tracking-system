@@ -9,8 +9,7 @@ from domain.repositories.loan_repository import LoanRepository
 import os 
 from fastapi import Depends
 from datetime import date, timedelta
-
-DATABASE_PUBLIC_URL = os.getenv("DATABASE_PUBLIC_URL", "postgresql://postgres:CJvkaczJkwYTOcYKfHpbPFNHVfHqJkiF@yamabiko.proxy.rlwy.net:40438/railway")
+DATABASE_PUBLIC_URL = os.getenv("DATABASE_URL", "postgresql://postgres:11020044@db:5432/loan_db")
 engine = create_engine(DATABASE_PUBLIC_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -19,7 +18,7 @@ class SQLAlchemyLoanRepository(LoanRepository):
         self._session = session
 
     @property
-    def session(self):
+    def session(self):  
         if self._session is None:
             raise ValueError("Session is not provided. Use dependency injection.")
         return self._session

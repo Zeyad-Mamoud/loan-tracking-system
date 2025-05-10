@@ -9,10 +9,11 @@ import logging
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
+# Create FastAPI app
 app = FastAPI(title="Loan Tracking System")
 
 # Get CORS origins from environment variable
-CORS_ORIGINS = os.getenv("CORS_ORIGINS", "https://loan-tracking-system-production-a1aa.up.railway.app").split(",")
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
 
 # Configure CORS
 app.add_middleware(
@@ -23,13 +24,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include routers
 app.include_router(loans.router, prefix="/loans", tags=["loans"])
 app.include_router(contacts.router, prefix="/contacts", tags=["contacts"])
 
 @app.get("/")
-def read_root():
+async def read_root():
     return {"message": "Welcome to Loan Tracking System"}
 
+# Create ASGI application
+application = app
 
 if __name__ == "__main__":
     import uvicorn
