@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://20.87.61.183:8000';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://20.164.51.143:8000';
 
 const headers = {
     'Content-Type': 'application/json',
