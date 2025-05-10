@@ -5,7 +5,7 @@ services:
     image: postgres:13
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 11020044
+      POSTGRES_PASSWORD: 1102004
       POSTGRES_DB: loan_db
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -29,7 +29,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:UfsEJYpRbxhXNZNkNaEwEBXvHcAfqHCX@postgres.railway.internal:5432/railway
+      - DATABASE_URL=postgresql://postgres:CJvkaczJkwYTOcYKfHpbPFNHVfHqJkiF@postgres.railway.internal:5432/railway
     depends_on:
       - db
     networks:
