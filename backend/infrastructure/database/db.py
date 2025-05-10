@@ -23,7 +23,7 @@ class SQLAlchemyLoanRepository(LoanRepository):
         if self._session is None:
             raise ValueError("Session is not provided. Use dependency injection.")
         return self._session
-    def get_upcoming_loans(self, days: int = 7) -> List[Loan]:
+    def get_upcoming_loans(self, days: int = 7) -> List[dict]:
         today = date.today()
         end_date = today + timedelta(days=days)
         
@@ -38,15 +38,16 @@ class SQLAlchemyLoanRepository(LoanRepository):
             loan_dict = {
                 'id': db_loan.id,
                 'amount': db_loan.amount,
-                'due_date': db_loan.due_date,
+                'due_date': db_loan.due_date.isoformat(),  # عشان التاريخ يكون JSON-compatible
                 'loan_type': db_loan.loan_type,
                 'contact_id': db_loan.contact_id,
                 'status': db_loan.status,
                 'remaining_balance': db_loan.remaining_balance
             }
-            loans.append(Loan(**loan_dict))
+            loans.append(loan_dict)
         
         return loans
+
 
     def add(self, loan: Loan) -> Loan:
         db_loan = LoanModel(**loan.__dict__)
