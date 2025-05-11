@@ -1,4 +1,4 @@
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://loan-tracking-app.azurecontainer.io';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://20.164.166.59:8000';
 
 const headers = {
     'Content-Type': 'application/json',
